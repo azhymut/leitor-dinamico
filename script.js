@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timer = setTimeout(() => {
             nav.style.opacity = '0';
             nav.style.visibility = 'hidden';
-        }, 3000); // Hide after 3 seconds of inactivity
+        }, 1500); // Reduced time to 1500 milliseconds
     }
 
     // Show nav on mouseover and hide on mouseout
