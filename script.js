@@ -1,29 +1,35 @@
-let currentPage = 97;
+let navVisible = false;
+const nav = document.querySelector('.navigation');
 
-function changePage(step) {
-    const prevPage = document.getElementById(`page-${currentPage}`);
-    currentPage += step;
-    const nextPage = document.getElementById(`page-${currentPage}`);
-    const currentPageDisplay = document.getElementById("current-page");
-    if (prevPage) prevPage.style.display = 'none';
-    if (nextPage) {
-        nextPage.style.display = 'block';
-        currentPageDisplay.textContent = currentPage;
-    } else {
-        currentPage -= step;
-    }
-}
+document.addEventListener('touchstart', () => {
+    nav.style.opacity = '1';
+    nav.style.visibility = 'visible';
+    navVisible = true;
+});
+
+document.addEventListener('touchend', () => {
+    setTimeout(() => {
+        if (navVisible) {
+            nav.style.opacity = '0';
+            nav.style.visibility = 'hidden';
+            navVisible = false;
+        }
+    }, 3000); // Adjust timing as needed
+});
 
 function toggleTheme() {
     const body = document.body;
-    const themeIcon = document.querySelector('.theme-icon');
-    if (body.classList.contains("dark-mode")) {
-        body.classList.replace("dark-mode", "light-mode");
-        themeIcon.innerHTML = '&#x1F4A1;';
-    } else {
-        body.classList.replace("light-mode", "dark-mode");
-        themeIcon.innerHTML = '&#x1F4A1;';
-    }
+    body.classList.toggle("light-mode");
+    body.classList.toggle("dark-mode");
 }
 
-document.getElementById(`page-${currentPage}`).style.display = 'block';
+function changePage(direction) {
+    const currentPageElement = document.querySelector('p[style*="display: block"]');
+    let newPageId = parseInt(currentPageElement.id.split('-')[1]) + direction;
+    const newPageElement = document.getElementById(`page-${newPageId}`);
+    if (newPageElement) {
+        currentPageElement.style.display = 'none';
+        newPageElement.style.display = 'block';
+        document.getElementById('current-page').textContent = newPageId;
+    }
+}
