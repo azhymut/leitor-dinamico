@@ -1,20 +1,27 @@
-let navVisible = false;
-const nav = document.querySelector('.navigation');
+document.addEventListener('DOMContentLoaded', function() {
+    const nav = document.querySelector('.navigation');
+    let timer;
 
-document.addEventListener('touchstart', () => {
-    nav.style.opacity = '1';
-    nav.style.visibility = 'visible';
-    navVisible = true;
-});
+    function showNav() {
+        nav.style.opacity = '1';
+        nav.style.visibility = 'visible';
+        clearTimeout(timer); // Clear the timer if it's set
+    }
 
-document.addEventListener('touchend', () => {
-    setTimeout(() => {
-        if (navVisible) {
+    function hideNav() {
+        timer = setTimeout(() => {
             nav.style.opacity = '0';
             nav.style.visibility = 'hidden';
-            navVisible = false;
-        }
-    }, 3000); // Adjust timing as needed
+        }, 3000); // Hide after 3 seconds of inactivity
+    }
+
+    // Show nav on mouseover and hide on mouseout
+    nav.addEventListener('mouseover', showNav);
+    nav.addEventListener('mouseout', hideNav);
+
+    // For touch devices
+    document.addEventListener('touchstart', showNav, false);
+    document.addEventListener('touchend', hideNav, false);
 });
 
 function toggleTheme() {
