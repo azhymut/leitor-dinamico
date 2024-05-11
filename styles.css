@@ -32,10 +32,9 @@ body.light-mode {
     background-color: #444;
     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
     opacity: 0;
-    visibility: hidden; /* Initially hidden, changed for better control */
+    visibility: hidden; /* Initially hidden */
 }
 
-/* Hover and focus within to show the navigation bar clearly */
 .navigation:hover,
 .navigation:focus-within {
     opacity: 1;
@@ -45,7 +44,7 @@ body.light-mode {
 .button-container {
     display: flex;
     justify-content: center;
-    align-items: center; /* Align buttons vertically in the center */
+    flex-grow: 1;
 }
 
 button {
@@ -59,11 +58,11 @@ button {
     background: transparent;
     color: white;
     cursor: pointer;
-    margin: 0 10px; /* Added margin for better spacing */
+    margin: 0 5px; /* Reduced margin for better alignment */
 }
 
 button:hover, button:focus {
-    background-color: #555; /* Ensures that focus and hover are consistent */
+    background-color: #555;
 }
 
 .icon, #current-page {
