@@ -30,23 +30,22 @@ body.light-mode {
     justify-content: space-between;
     padding: 10px 20px;
     background-color: #444;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    visibility: hidden; /* Initially hidden */
+    visibility: hidden; /* Initially hidden, changed for better control */
 }
 
-/* Ensure visibility for touch and hover */
+/* Hover and focus within to show the navigation bar clearly */
 .navigation:hover,
-.navigation:focus-within,
-.navigation:active { /* Added :active for better mobile touch support */
+.navigation:focus-within {
     opacity: 1;
-    visibility: visible; /* Make sure it's visible when active/hovered/focused */
+    visibility: visible;
 }
 
 .button-container {
     display: flex;
     justify-content: center;
-    flex-grow: 1;
+    align-items: center; /* Align buttons vertically in the center */
 }
 
 button {
@@ -60,17 +59,14 @@ button {
     background: transparent;
     color: white;
     cursor: pointer;
+    margin: 0 10px; /* Added margin for better spacing */
 }
 
-button:hover {
-    background-color: #555;
+button:hover, button:focus {
+    background-color: #555; /* Ensures that focus and hover are consistent */
 }
 
-.icon {
-    font-size: 24px;
-}
-
-#current-page {
+.icon, #current-page {
     font-size: 24px;
     color: white;
 }
