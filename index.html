@@ -17,9 +17,12 @@
         </div>
     </div>
     <div class="navigation">
-        <button onclick="changePage(-1)">Página Anterior</button>
-        <button onclick="changePage(1)">Próxima Página</button>
-        <button onclick="toggleTheme()">Mudar Tema</button>
+        <button onclick="toggleTheme()" class="theme-icon"><span class="icon">&#x1F4A1;</span></button>
+        <div class="center-buttons">
+            <button onclick="changePage(-1)"><span class="icon">&#x25C0;</span></button>
+            <button onclick="changePage(1)"><span class="icon">&#x25B6;</span></button>
+        </div>
+        <div id="current-page">97</div>
     </div>
     <script src="script.js"></script>
 </body>
