@@ -4,20 +4,20 @@ body.dark-mode {
 }
 
 body.light-mode {
-    background-color: #f5f5dc; /* Cereal or pale white color */
+    background-color: #f5f5dc;
     color: black;
 }
 
 #book-container {
     font-family: 'Arial', sans-serif;
     font-size: 14px;
-    max-width: 800px;
-    width: 100%;
+    width: 800px;
     height: 600px;
-    margin: auto;
+    margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
     overflow: auto;
+    max-width: 100%;
 }
 
 .navigation {
@@ -27,11 +27,12 @@ body.light-mode {
     right: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 10px;
     background-color: #444;
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 2s, visibility 2s;
 }
 
 button {
@@ -45,7 +46,6 @@ button {
     background: transparent;
     color: white;
     cursor: pointer;
-    margin: 0 10px;
 }
 
 button:hover, button:focus {
@@ -55,10 +55,4 @@ button:hover, button:focus {
 .icon, #current-page {
     font-size: 24px;
     color: white;
-}
-
-@media (max-width: 600px) {
-    button, .icon, #current-page {
-        font-size: 20px;
-    }
 }
