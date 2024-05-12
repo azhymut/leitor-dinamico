@@ -1,63 +1,40 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('productForm');
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const name = document.getElementById('productName').value;
-        const brand = document.getElementById('productBrand').value;
-        const expiry = document.getElementById('productExpiry').value;
-        const quantity = document.getElementById('productQuantity').value;
-        
-        if (name && brand && expiry && quantity) {
-            const product = { name, brand, expiry, quantity };
-            addProduct(product);
-            form.reset();
-            saveProducts();
+    const nav = document.querySelector('.navigation');
+
+    function toggleNavVisibility() {
+        if (nav.style.opacity === '0' || nav.style.opacity === '') {
+            nav.style.opacity = '1';
+            nav.style.visibility = 'visible';
         } else {
-            alert('Todos os campos devem ser preenchidos.');
+            nav.style.opacity = '0';
+            nav.style.visibility = 'hidden';
         }
+    }
+
+    function changePage(direction) {
+        const currentPageNumber = parseInt(document.getElementById("current-page").textContent, 10);
+        const newPageNumber = currentPageNumber + direction;
+        const newPageElement = document.getElementById(`page-${newPageNumber}`);
+
+        if (newPageElement) {
+            document.querySelector('p[style*="display: block"]').style.display = 'none';
+            newPageElement.style.display = 'block';
+            document.getElementById("current-page").textContent = newPageNumber;
+        }
+    }
+
+    document.querySelectorAll('.navigation button').forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.classList.contains('theme-icon')) {
+                document.body.classList.toggle('light-mode');
+                document.body.classList.toggle('dark-mode');
+            } else {
+                const direction = this.innerText.includes('C0') ? -1 : 1;
+                changePage(direction);
+            }
+        });
     });
 
-    document.getElementById('prevPage').addEventListener('click', function() {
-        changePage(-1);
-    });
-
-    document.getElementById('nextPage').addEventListener('click', function() {
-        changePage(1);
-    });
-
-    document.getElementById('toggleTheme').addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-    });
-
-    loadProducts();
+    document.addEventListener('mouseover', toggleNavVisibility);
+    document.addEventListener('mouseout', toggleNavVisibility);
 });
-
-function loadProducts() {
-    const products = JSON.parse(localStorage.getItem('products')) || [];
-    products.forEach(product => addProduct(product));
-}
-
-function saveProducts() {
-    const productList = [];
-    document.querySelectorAll('#productList div').forEach(div => {
-        const product = {
-            name: div.dataset.name,
-            brand: div.dataset.brand,
-            expiry: div.dataset.expiry,
-            quantity: div.dataset.quantity
-        };
-        productList.push(product);
-    });
-    localStorage.setItem('products', JSON.stringify(productList));
-}
-
-function addProduct(product) {
-    const productList = document.getElementById('productList');
-    const div = document.createElement('div');
-    div.textContent = `${product.name} - ${product.brand} - ${product.expiry} - ${product.quantity}`;
-    productList.appendChild(div);
-}
-
-function changePage(change) {
-    // Lógica de paginação, atualizar com o número total de páginas e carregar produtos conforme necessário
-}
