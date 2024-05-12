@@ -4,38 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Estoque</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .dark-mode { background-color: #333; color: white; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="navbar">
-        <button onclick="changePage(-1)">Anterior</button>
+        <button id="prevPage">Anterior</button>
         <span id="page-number">1</span>
-        <button onclick="changePage(1)">Próximo</button>
-        <button onclick="toggleTheme()">Mudar Tema</button>
+        <button id="nextPage">Próximo</button>
+        <button id="toggleTheme">Mudar Tema</button>
     </div>
-    <div id="product-list"></div>
-
-    <script>
-        let currentPage = 1;
-        let totalPages = 10; // Exemplo: número total de páginas
-        let isDarkMode = false;
-
-        document.getElementById('page-number').textContent = currentPage;
-
-        function changePage(direction) {
-            currentPage += direction;
-            currentPage = Math.max(1, Math.min(totalPages, currentPage));
-            document.getElementById('page-number').textContent = currentPage;
-            // Aqui você pode adicionar a lógica para atualizar a lista de produtos com base na página atual
-        }
-
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            document.body.className = isDarkMode ? 'dark-mode' : '';
-        }
-    </script>
+    <h1>Controle de Estoque de Produtos</h1>
+    <form id="productForm">
+        <input type="text" id="productName" placeholder="Nome do Produto" required>
+        <input type="text" id="productBrand" placeholder="Marca do Produto" required>
+        <input type="date" id="productExpiry" placeholder="Data de Validade" required>
+        <input type="number" id="productQuantity" placeholder="Quantidade" min="1" required>
+        <button type="submit">Adicionar Produto</button>
+    </form>
+    <div id="productList"></div>
+    <script src="script.js"></script>
 </body>
 </html>
