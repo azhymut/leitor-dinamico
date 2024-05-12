@@ -1,55 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const nav = document.querySelector('.navigation');
-    let hideTimer;
+    const themeButton = document.querySelector('.navigation button:first-child');
+    const prevButton = document.querySelector('.navigation button:nth-child(2)');
+    const nextButton = document.querySelector('.navigation button:nth-child(3)');
+    const currentPageElement = document.getElementById("current-page");
 
-    // Function to make navigation visible
-    function makeNavVisible() {
-        nav.style.opacity = '1';
-        nav.style.visibility = 'visible';
-        clearTimeout(hideTimer); // Clear any existing timeout
+    function toggleTheme() {
+        document.body.classList.toggle("light-mode");
+        document.body.classList.toggle("dark-mode");
     }
 
-    // Function to hide navigation after a delay
-    function scheduleHideNav() {
-        hideTimer = setTimeout(() => {
-            nav.style.opacity = '0';
-            nav.style.visibility = 'hidden';
-        }, 1000); // Hide after 1 second of inactivity
-    }
-
-    // Show navigation when any mouse movement is detected
-    document.addEventListener('mousemove', function() {
-        makeNavVisible();
-        scheduleHideNav();
-    });
-
-    // Ensure navigation visibility on touch devices
-    document.addEventListener('touchstart', makeNavVisible);
-    document.addEventListener('touchend', scheduleHideNav);
-
-    // Function to change the page
     function changePage(direction) {
-        const currentPageElement = document.querySelector('p[style="display: block;"]');
-        const currentPageNumber = parseInt(currentPageElement.id.split('-')[1]);
-        const newPageNumber = currentPageNumber + direction;
-        const newPageElement = document.getElementById(`page-${newPageNumber}`);
-
+        let currentPage = parseInt(currentPageElement.textContent, 10);
+        let newPage = currentPage + direction;
+        let newPageElement = document.getElementById(`page-${newPage}`);
         if (newPageElement) {
-            currentPageElement.style.display = 'none';
+            document.querySelector('p[style*="display: block"]').style.display = 'none';
             newPageElement.style.display = 'block';
-            document.getElementById('current-page').textContent = newPageNumber;
+            currentPageElement.textContent = newPage;
         }
     }
 
-    // Event listeners for page navigation buttons
-    const prevButton = document.querySelector('button[onclick="changePage(-1)"]');
-    const nextButton = document.querySelector('button[onclick="changePage(1)"]');
-
-    prevButton.addEventListener('click', function() {
-        changePage(-1);
-    });
-
-    nextButton.addEventListener('click', function() {
-        changePage(1);
-    });
+    themeButton.addEventListener('click', toggleTheme);
+    prevButton.addEventListener('click', () => changePage(-1));
+    nextButton.addEventListener('click', () => changePage(1));
 });
