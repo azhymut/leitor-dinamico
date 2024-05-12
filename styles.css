@@ -1,71 +1,19 @@
-body.dark-mode {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #000;
+}
+
+.dark-mode {
     background-color: #333;
     color: white;
 }
 
-body.light-mode {
-    background-color: #f5f5dc; /* Cereal or pale white color */
-    color: black;
-}
-
-#book-container {
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-    width: 800px;
-    height: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: auto;
-    max-width: 100%;
-}
-
-.navigation {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #444;
-    opacity: 0;
-    visibility: hidden; /* Initially hidden */
-    transition: opacity 0.5s, visibility 0.5s;
-}
-
-.navigation:hover,
-.navigation:focus-within {
-    opacity: 1;
-    visibility: visible;
-}
-
 button {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    color: white;
-    cursor: pointer;
-    margin: 0 10px; /* Ensures spacing between buttons */
+    margin: 5px;
+    padding: 10px;
 }
 
-button:hover, button:focus {
-    background-color: #555;
-}
-
-.icon, #current-page {
-    font-size: 24px;
-    color: white;
-}
-
-@media (max-width: 600px) {
-    button, .icon, #current-page {
-        font-size: 20px;
-    }
+#productList tr.expiring {
+    color: red;
 }
