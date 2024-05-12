@@ -2,31 +2,54 @@ document.addEventListener('DOMContentLoaded', function() {
     const nav = document.querySelector('.navigation');
     let hideTimer;
 
-    document.addEventListener('mousemove', function() {
+    // Function to make navigation visible
+    function makeNavVisible() {
         nav.style.opacity = '1';
         nav.style.visibility = 'visible';
-        clearTimeout(hideTimer);
+        clearTimeout(hideTimer); // Clear any existing timeout
+    }
+
+    // Function to hide navigation after a delay
+    function scheduleHideNav() {
         hideTimer = setTimeout(() => {
             nav.style.opacity = '0';
             nav.style.visibility = 'hidden';
-        }, 1000); // Auto-hide after 1 second of inactivity
+        }, 1000); // Hide after 1 second of inactivity
+    }
+
+    // Show navigation when any mouse movement is detected
+    document.addEventListener('mousemove', function() {
+        makeNavVisible();
+        scheduleHideNav();
     });
 
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', function(event) {
-            const currentId = parseInt(document.querySelector('p[style*="display: block"]').id.split('-')[1], 10);
-            let newId = currentId;
-            if (event.target.closest('button').innerHTML.includes('25C0')) {
-                newId = currentId - 1; // Previous page
-            } else if (event.target.closest('button').innerHTML.includes('25B6')) {
-                newId = currentId + 1; // Next page
-            }
-            const newPage = document.getElementById(`page-${newId}`);
-            if (newPage) {
-                document.querySelector('p[style*="display: block"]').style.display = 'none';
-                newPage.style.display = 'block';
-                document.getElementById('current-page').textContent = newId;
-            }
-        });
+    // Ensure navigation visibility on touch devices
+    document.addEventListener('touchstart', makeNavVisible);
+    document.addEventListener('touchend', scheduleHideNav);
+
+    // Function to change the page
+    function changePage(direction) {
+        const currentPageElement = document.querySelector('p[style="display: block;"]');
+        const currentPageNumber = parseInt(currentPageElement.id.split('-')[1]);
+        const newPageNumber = currentPageNumber + direction;
+        const newPageElement = document.getElementById(`page-${newPageNumber}`);
+
+        if (newPageElement) {
+            currentPageElement.style.display = 'none';
+            newPageElement.style.display = 'block';
+            document.getElementById('current-page').textContent = newPageNumber;
+        }
+    }
+
+    // Event listeners for page navigation buttons
+    const prevButton = document.querySelector('button[onclick="changePage(-1)"]');
+    const nextButton = document.querySelector('button[onclick="changePage(1)"]');
+
+    prevButton.addEventListener('click', function() {
+        changePage(-1);
+    });
+
+    nextButton.addEventListener('click', function() {
+        changePage(1);
     });
 });
