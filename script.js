@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timer = setTimeout(() => {
             nav.style.opacity = '0';
             nav.style.visibility = 'hidden';
-        }, 2000); // Hide after 2 seconds of no interaction
+        }, 1000); // Hide after 2 seconds of no interaction
     });
 
     const themeButton = document.querySelector('.navigation button:first-child');
