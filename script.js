@@ -17,66 +17,47 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Adicionando delegação de eventos para remover produtos
-    document.getElementById('productList').addEventListener('click', function(e) {
-        if (e.target.tagName === 'BUTTON') {
-            deleteProduct(e.target);
-        }
+    document.getElementById('prevPage').addEventListener('click', function() {
+        changePage(-1);
+    });
+
+    document.getElementById('nextPage').addEventListener('click', function() {
+        changePage(1);
+    });
+
+    document.getElementById('toggleTheme').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
     });
 
     loadProducts();
 });
 
 function loadProducts() {
-    try {
-        const products = JSON.parse(localStorage.getItem('products')) || [];
-        products.forEach(product => addProduct(product, false));
-    } catch (e) {
-        console.error("Falha ao carregar produtos: ", e);
-        localStorage.clear();
-    }
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    products.forEach(product => addProduct(product));
 }
 
 function saveProducts() {
     const productList = [];
-    document.querySelectorAll('#productList tr').forEach(row => {
+    document.querySelectorAll('#productList div').forEach(div => {
         const product = {
-            name: row.cells[0].textContent,
-            brand: row.cells[1].textContent,
-            expiry: row.cells[2].textContent,
-            quantity: row.cells[3].textContent
+            name: div.dataset.name,
+            brand: div.dataset.brand,
+            expiry: div.dataset.expiry,
+            quantity: div.dataset.quantity
         };
         productList.push(product);
     });
     localStorage.setItem('products', JSON.stringify(productList));
 }
 
-function addProduct(product, addToDOM = true) {
-    if (addToDOM) {
-        const productList = document.getElementById('productList');
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${product.name}</td>
-            <td>${product.brand}</td>
-            <td>${product.expiry}</td>
-            <td>${product.quantity}</td>
-            <td><button>Remover</button></td>
-        `;
-        
-        if (new Date(product.expiry) <= new Date()) {
-            row.classList.add('expiring');
-        }
-        
-        productList.appendChild(row);
-    }
+function addProduct(product) {
+    const productList = document.getElementById('productList');
+    const div = document.createElement('div');
+    div.textContent = `${product.name} - ${product.brand} - ${product.expiry} - ${product.quantity}`;
+    productList.appendChild(div);
 }
 
-function deleteProduct(btn) {
-    try {
-        const row = btn.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-        saveProducts();
-    } catch (e) {
-        console.error("Erro ao remover produto: ", e);
-    }
+function changePage(change) {
+    // Lógica de paginação, atualizar com o número total de páginas e carregar produtos conforme necessário
 }
