@@ -1,29 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leitor de Textos - Dom Quixote</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Controle de Estoque</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .dark-mode { background-color: #333; color: white; }
+    </style>
 </head>
-<body class="dark-mode">
-    <div id="book-container">
-        <div id="text-content">
-            <p id="page-97" style="display:block;">E enquanto isto sucedia na povoação de Don Diego, o cura e o barbeiro tinham quase desesperado de tornar a ver Dom Quixote, tal era a demora que tinha em tornar à sua aldeia; porém um dia, que já se cumpria um mês depois que Dom Quixote partira para Saragoça, o cura, estando em casa, ouviu chamar à porta; abriu, e viu entrar pela porta dois homens a cavalo, o que por não ser dia de festa nem de feira, lhe causou admiração; mas maior admiração lhe causou quando viu que era Dom Quixote e Sancho Pança, os quais vinham muito tristes e macilentos.</p>
-            <p id="page-98" style="display:none;">Assim que o cura os viu, perguntou: - Que é isto, irmãos? Parece que chegais derrotados. - Não há vitória onde não há batalha - respondeu Dom Quixote. E tanto assim é, que eu, sem batalhar, venho vencido e derrotado pela mão da discórdia. Então, o cura e o barbeiro se meteram com eles para casa, e pediram a Sancho notícias de sua esposa e filhos; e ele, com lágrimas nos olhos, lhes disse que todos estavam de saúde.</p>
-            <p id="page-99" style="display:none;">Quando Dom Quixote entrou na casa do cura, e o barbeiro, de grande amizade que entre eles havia, disse, olhando para Dom Quixote, que sem dúvida alguma lhe tinham feito muito mal as desventuras da descomunal batalha dos moinhos de vento, tão bem figurada e descrita pelo fidalgo cavaleiro; ao que Dom Quixote respondeu que as aventuras tinham altos e baixos, e que, o mais das vezes, se encontram onde menos se esperam.</p>
-            <p id="page-100" style="display:none;">Falando nisto, chegaram à casa, onde os esperava a sobrinha e a ama, que já tinham notícia da vinda dos seus. Todos eles abraçaram Dom Quixote e Sancho, o qual, vendo as duas mulheres, tirou o barrete, fez uma grande cortesia, e disse alguma coisa em louvor da fidelidade das mulheres, mas a ama cortou-lhe a palavra e pediu-lhe novas da sua saúde.</p>
-            <p id="page-101" style="display:none;">Dom Quixote, desejoso de dar ao cura e ao barbeiro a notícia da sua terceira saída, começou a contar com muito espírito e graça os sucessos dela; contava com tantas circunstâncias, que parecia ao mesmo tempo que tudo o que contava lhe acontecera naquela hora. O cura e o barbeiro estavam suspensos, ouvindo falar Dom Quixote.</p>
-        </div>
+<body>
+    <div id="navbar">
+        <button onclick="changePage(-1)">Anterior</button>
+        <span id="page-number">1</span>
+        <button onclick="changePage(1)">Próximo</button>
+        <button onclick="toggleTheme()">Mudar Tema</button>
     </div>
-    <div class="navigation">
-        <button onclick="toggleTheme()" class="theme-icon"><span class="icon">&#x1F4A1;</span></button>
-        <div style="display: flex; justify-content: center; flex-grow: 1;">
-            <button onclick="changePage(-1)"><span class="icon">&#x25C0;</span></button>
-            <button onclick="changePage(1)"><span class="icon">&#x25B6;</span></button>
-        </div>
-        <div id="current-page" style="margin-right: 20px;">97</div>
-    </div>
-    <script src="script.js"></script>
+    <div id="product-list"></div>
+
+    <script>
+        let currentPage = 1;
+        let totalPages = 10; // Exemplo: número total de páginas
+        let isDarkMode = false;
+
+        document.getElementById('page-number').textContent = currentPage;
+
+        function changePage(direction) {
+            currentPage += direction;
+            currentPage = Math.max(1, Math.min(totalPages, currentPage));
+            document.getElementById('page-number').textContent = currentPage;
+            // Aqui você pode adicionar a lógica para atualizar a lista de produtos com base na página atual
+        }
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.body.className = isDarkMode ? 'dark-mode' : '';
+        }
+    </script>
 </body>
 </html>
