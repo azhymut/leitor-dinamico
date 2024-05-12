@@ -30,21 +30,15 @@ body.light-mode {
     justify-content: space-between;
     padding: 10px 20px;
     background-color: #444;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
     opacity: 0;
     visibility: hidden; /* Initially hidden */
+    transition: opacity 0.5s, visibility 0.5s;
 }
 
 .navigation:hover,
 .navigation:focus-within {
     opacity: 1;
     visibility: visible;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    flex-grow: 1;
 }
 
 button {
@@ -58,7 +52,7 @@ button {
     background: transparent;
     color: white;
     cursor: pointer;
-    margin: 0 5px; /* Reduced margin for better alignment */
+    margin: 0 10px; /* Ensures spacing between buttons */
 }
 
 button:hover, button:focus {
