@@ -1,42 +1,40 @@
 document.addEventListener('DOMContentLoaded', function() {
     const nav = document.querySelector('.navigation');
-    let timer;
 
-    function showNav() {
-        nav.style.opacity = '1';
-        nav.style.visibility = 'visible';
-        clearTimeout(timer); // Clear the timer if it's set
-    }
-
-    function hideNav() {
-        timer = setTimeout(() => {
+    function toggleNavVisibility() {
+        if (nav.style.opacity === '0' || nav.style.opacity === '') {
+            nav.style.opacity = '1';
+            nav.style.visibility = 'visible';
+        } else {
             nav.style.opacity = '0';
             nav.style.visibility = 'hidden';
-        }, 1500); // Reduced time to 1500 milliseconds
+        }
     }
 
-    // Show nav on mouseover and hide on mouseout
-    nav.addEventListener('mouseover', showNav);
-    nav.addEventListener('mouseout', hideNav);
+    function changePage(direction) {
+        const currentPageNumber = parseInt(document.getElementById("current-page").textContent, 10);
+        const newPageNumber = currentPageNumber + direction;
+        const newPageElement = document.getElementById(`page-${newPageNumber}`);
 
-    // For touch devices
-    document.addEventListener('touchstart', showNav, false);
-    document.addEventListener('touchend', hideNav, false);
+        if (newPageElement) {
+            document.querySelector('p[style*="display: block"]').style.display = 'none';
+            newPageElement.style.display = 'block';
+            document.getElementById("current-page").textContent = newPageNumber;
+        }
+    }
+
+    document.querySelectorAll('.navigation button').forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.classList.contains('theme-icon')) {
+                document.body.classList.toggle('light-mode');
+                document.body.classList.toggle('dark-mode');
+            } else {
+                const direction = this.innerText.includes('C0') ? -1 : 1;
+                changePage(direction);
+            }
+        });
+    });
+
+    document.addEventListener('mouseover', toggleNavVisibility);
+    document.addEventListener('mouseout', toggleNavVisibility);
 });
-
-function toggleTheme() {
-    const body = document.body;
-    body.classList.toggle("light-mode");
-    body.classList.toggle("dark-mode");
-}
-
-function changePage(direction) {
-    const currentPageElement = document.querySelector('p[style*="display: block"]');
-    let newPageId = parseInt(currentPageElement.id.split('-')[1]) + direction;
-    const newPageElement = document.getElementById(`page-${newPageId}`);
-    if (newPageElement) {
-        currentPageElement.style.display = 'none';
-        newPageElement.style.display = 'block';
-        document.getElementById('current-page').textContent = newPageId;
-    }
-}
